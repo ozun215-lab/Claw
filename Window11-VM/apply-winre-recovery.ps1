@@ -31,24 +31,24 @@ $ErrorActionPreference = 'Stop'
 $RecoveryGuid = 'de94bba4-06d1-4d40-a16a-bfd50179d6ac'
 $RecoveryAttr = '0x8000000000000001'
 
-function Write-Step   { param([string]$M); Write-Host "`n=== $M ===" -ForegroundColor Cyan }
-function Write-OK     { param([string]$M); Write-Host "[OK] $M"  -ForegroundColor Green }
-function Write-Warn   { param([string]$M); Write-Host "[!]  $M"  -ForegroundColor Yellow }
+function Write-Step { param([string]$M); Write-Host "`n=== $M ===" -ForegroundColor Cyan }
+function Write-OK   { param([string]$M); Write-Host "[OK] $M" -ForegroundColor Green }
+function Write-Warn { param([string]$M); Write-Host "[!]  $M" -ForegroundColor Yellow }
 
 function Assert-Admin {
     $id  = [Security.Principal.WindowsIdentity]::GetCurrent()
     $pri = New-Object Security.Principal.WindowsPrincipal($id)
     if (-not $pri.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        throw '관리자 권한으로 실행해야 합니다.'
+        throw 'ERROR: Must run as Administrator.'
     }
 }
 
 function Confirm-Action {
     if ($Force) { return }
     Write-Host ''
-    Write-Warn '이 작업은 디스크 파티션을 변경합니다.'
-    $ans = Read-Host '계속하려면 YES를 입력하세요'
-    if ($ans -ne 'YES') { throw '사용자 취소.' }
+    Write-Warn 'This script will modify disk partitions.'
+    $ans = Read-Host 'Type YES to continue'
+    if ($ans -ne 'YES') { throw 'Cancelled by user.' }
 }
 
 function Test-RecoveryExists {
@@ -64,21 +64,21 @@ function Ensure-FreeSpaceAtEnd {
     $cur     = $part.Size
     $target  = $cur - ($NeededMB * 1MB)
     if ($target -lt $support.SizeMin) {
-        throw ('C: 를 {0}MB 줄일 수 없습니다. (현재:{1}MB / 최소:{2}MB)' -f
+        throw ('Cannot shrink C: by {0}MB. (Current:{1}MB / Min:{2}MB)' -f
                $NeededMB, [math]::Round($cur/1MB), [math]::Round($support.SizeMin/1MB))
     }
     if ($ShrinkOSDrive) {
-        Write-Warn ('C: 마지막 부분에서 {0}MB 확보합니다...' -f $NeededMB)
+        Write-Warn ('Shrinking C: by {0}MB at end of disk...' -f $NeededMB)
         Resize-Partition -DriveLetter C -Size $target
-        Write-OK 'C: 축소 완료'
+        Write-OK 'C: shrink done.'
     } else {
-        Write-Warn '-ShrinkOSDrive 없이 실행 중 — 디스크 끝에 충분한 여유가 있는지 확인하세요.'
+        Write-Warn 'No -ShrinkOSDrive flag -- make sure there is free space at end of disk.'
     }
 }
 
 function Invoke-Diskpart {
     param([string[]]$Lines, [string]$Tag)
-    $tmp = Join-Path $env:TEMP ('diskpart-{0}-{1}.txt' -f $Tag, [Guid]::NewGuid().ToString('N'))
+    $tmp = Join-Path $env:TEMP ('dp-{0}-{1}.txt' -f $Tag, [Guid]::NewGuid().ToString('N'))
     $Lines | Set-Content -Path $tmp -Encoding ASCII
     diskpart /s $tmp | Out-Host
     Remove-Item $tmp -Force -ErrorAction SilentlyContinue
@@ -91,13 +91,13 @@ $TargetRoot   = 'C:\Windows'
 $RecVol       = $DriveLetter + ':'
 
 Write-Step 'Input'
-Write-Host "WinRE      : $WinReWimPath"
-Write-Host "Size       : $RecoverySizeMB MB"
-Write-Host "Letter     : $DriveLetter"
-Write-Host "ShrinkOS   : $ShrinkOSDrive"
+Write-Host "WinRE    : $WinReWimPath"
+Write-Host "Size     : $RecoverySizeMB MB"
+Write-Host "Letter   : $DriveLetter"
+Write-Host "ShrinkOS : $ShrinkOSDrive"
 
 if (Test-RecoveryExists) {
-    throw '복구 파티션이 이미 존재합니다. 먼저 제거한 뒤 재실행하세요.'
+    throw 'ERROR: A recovery partition already exists. Remove it first, then re-run.'
 }
 
 Confirm-Action
@@ -105,14 +105,14 @@ Confirm-Action
 Write-Step 'Disable WinRE'
 reagentc /disable | Out-Host
 
-Write-Step 'System disk'
+Write-Step 'Detect system disk'
 $diskNum = (Get-Partition -DriveLetter C -ErrorAction Stop).DiskNumber
-Write-OK "Disk #$diskNum"
+Write-OK "System disk: #$diskNum"
 
 Write-Step 'Space check'
 Ensure-FreeSpaceAtEnd -NeededMB $RecoverySizeMB
 
-Write-Step 'Create recovery partition'
+Write-Step 'Create recovery partition at end of C:'
 Invoke-Diskpart -Tag 'create' -Lines @(
     "select disk $diskNum",
     "create partition primary size=$RecoverySizeMB",
@@ -126,7 +126,7 @@ Invoke-Diskpart -Tag 'create' -Lines @(
 Write-Step 'Copy winre.wim'
 New-Item -ItemType Directory -Path "$RecVol\Recovery\WindowsRE" -Force | Out-Null
 Copy-Item -Path $WinReWimPath -Destination "$RecVol\Recovery\WindowsRE\winre.wim" -Force
-Write-OK "복사 완료: $RecVol\Recovery\WindowsRE\winre.wim"
+Write-OK "Copied to: $RecVol\Recovery\WindowsRE\winre.wim"
 
 Write-Step 'Register WinRE'
 reagentc /setreimage /path "$RecVol\Recovery\WindowsRE" /target $TargetRoot | Out-Host
@@ -141,4 +141,4 @@ Invoke-Diskpart -Tag 'remove' -Lines @(
 )
 
 Write-Step 'Done'
-Write-OK '복구 파티션 생성 및 WinRE 등록이 완료되었습니다.'
+Write-OK 'Recovery partition created and WinRE registered successfully.'
