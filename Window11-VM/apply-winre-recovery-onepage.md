@@ -7,7 +7,7 @@
 
 ## 준비물
 - 관리자 권한 PowerShell
-- 추출된 `winre.wim`
+- 추출된 `winre.wim` (기본 경로: `C:\Temp\WinRE\winre.wim`)
 - 대상 Windows 11 시스템
 
 ---

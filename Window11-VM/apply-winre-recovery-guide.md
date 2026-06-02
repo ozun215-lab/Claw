@@ -6,7 +6,7 @@
 
 ## 전제
 
-- `winre.wim`은 이미 추출된 상태
+- `winre.wim`은 이미 추출된 상태 (기본 경로: `C:\Temp\WinRE\winre.wim`)
 - 대상 시스템은 Windows 11
 - 관리자 권한 PowerShell 사용
 - 필요 시 C:의 마지막 부분을 조금 줄여 복구 파티션 공간을 확보
