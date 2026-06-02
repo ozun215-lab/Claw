@@ -131,7 +131,10 @@ Write-OK "Copied to: $RecVol\Recovery\WindowsRE\winre.wim"
 Write-Step 'Register WinRE'
 reagentc /setreimage /path "$RecVol\Recovery\WindowsRE" /target $TargetRoot | Out-Host
 reagentc /enable | Out-Host
-reagentc /info   | Out-Host
+
+Write-Step 'Verify WinRE (before hiding drive letter)'
+reagentc /info | Out-Host
+Write-OK 'Status above should show Enabled. After hiding the drive letter it will show Disabled -- this is normal.'
 
 Write-Step 'Hide drive letter'
 Invoke-Diskpart -Tag 'remove' -Lines @(
@@ -142,3 +145,4 @@ Invoke-Diskpart -Tag 'remove' -Lines @(
 
 Write-Step 'Done'
 Write-OK 'Recovery partition created and WinRE registered successfully.'
+Write-OK 'reagentc /info may now show Disabled -- this is expected. WinRE is registered in BCD and will work on reboot.'

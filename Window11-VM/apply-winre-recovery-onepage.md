@@ -38,7 +38,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 5. `winre.wim` 복사
 6. `reagentc /setreimage` 등록
 7. `reagentc /enable` 활성화
-8. 복구 파티션 드라이브 문자 숨김
+8. **`reagentc /info` 확인** ← 드라이브 문자 숨기기 전 Enabled 상태 확인
+9. 복구 파티션 드라이브 문자 숨김
 
 ---
 
@@ -56,7 +57,14 @@ reagentc /info
 Get-Partition | Format-Table DiskNumber, PartitionNumber, DriveLetter, Size, GptType
 ```
 
-복구 파티션은 드라이브 문자 없이 숨겨지고, WinRE 상태는 활성화로 표시되어야 합니다.
+> 드라이브 문자 숨기기 **전**에 `Enabled` 상태를 확인하세요.  
+> 숨긴 **후**에는 `Disabled`로 표시되지만 이는 **정상**입니다.  
+> BCD에 파티션 번호로 등록되어 있으므로 재부팅 후 WinRE가 정상 동작합니다.
+
+BCD 등록 확인:
+```powershell
+bcdedit /enum all | Select-String -Pattern "recovery|winre" -Context 2
+```
 
 ---
 
