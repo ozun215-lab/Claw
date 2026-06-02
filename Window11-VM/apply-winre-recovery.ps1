@@ -158,7 +158,7 @@ exit
 Assert-Admin
 $WinReWimPath = (Resolve-Path $WinReWimPath).Path
 $TargetRoot = 'C:\Windows'
-$RecoveryVolume = "$DriveLetter:`"
+$RecoveryVolume = $DriveLetter + ':'
 
 Write-Step 'Input'
 Write-Host "WinRE source : $WinReWimPath"
