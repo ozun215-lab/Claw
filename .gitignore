@@ -48,6 +48,17 @@ memory/*.log
 *.tar
 *.gz
 
+# Temporary / backup files
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+
 # Python / misc caches
 __pycache__/
 *.pyc
