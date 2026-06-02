@@ -9,7 +9,7 @@
 - `winre.wim`은 이미 추출된 상태
 - 대상 시스템은 Windows 11
 - 관리자 권한 PowerShell 사용
-- 필요 시 C:를 조금 줄여 복구 파티션 공간을 확보
+- 필요 시 C:의 마지막 부분을 조금 줄여 복구 파티션 공간을 확보
 
 ---
 
@@ -39,6 +39,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 .\apply-winre-recovery.ps1 -WinReWimPath C:\Temp\WinRE\winre.wim
 ```
 
+실행 시 확인 메시지가 나오며, 진행하려면 `YES`를 입력하면 됩니다.
+
 ### 예시 2: C:를 줄여가며 작업하는 경우
 
 ```powershell
@@ -50,10 +52,10 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 ## 기본 동작
 
-복구 파티션은 아래 형식으로 생성됩니다.
+복구 파티션은 일반적으로 C: 뒤, 디스크 마지막에 생성됩니다.
 
 ```text
-[EFI] -> [MSR] -> [Recovery] -> [Windows(C:)]
+[EFI] -> [MSR] -> [Windows(C:)] -> [Recovery]
 ```
 
 복구 파티션 정보:
@@ -76,7 +78,7 @@ Get-Partition | Format-Table DiskNumber, PartitionNumber, DriveLetter, Size, Gpt
 
 ## 고객 전달용 짧은 설명
 
-> 추출된 `winre.wim`을 사용해 Windows 11 복구 파티션을 다시 만들고 WinRE를 재등록하는 스크립트입니다. 관리자 권한 PowerShell에서 실행하면 복구 파티션 생성, 이미지 복사, `reagentc` 등록, 드라이브 문자 숨김까지 자동으로 처리합니다.
+> 추출된 `winre.wim`을 사용해 Windows 11 복구 파티션을 다시 만들고 WinRE를 재등록하는 스크립트입니다. 관리자 권한 PowerShell에서 실행하면 C: 뒤쪽의 복구 파티션 생성, 이미지 복사, `reagentc` 등록, 드라이브 문자 숨김까지 자동으로 처리합니다.
 
 ---
 

@@ -1,13 +1,16 @@
 #Requires -RunAsAdministrator
-<#!
+<#
 .SYNOPSIS
-    Create a Windows recovery partition and register an existing winre.wim.
+    Create a Windows recovery partition at the end of C: and register an existing winre.wim.
 .DESCRIPTION
     This script assumes winre.wim has already been extracted.
-    It will optionally shrink C:, create a GPT recovery partition, copy winre.wim,
-    set the WinRE image path, enable WinRE, and hide the recovery drive letter.
+    It will optionally shrink C: to make room at the end of the disk, create a GPT recovery partition,
+    copy winre.wim, set the WinRE image path, enable WinRE, and hide the recovery drive letter.
 
-    Recommended to run on the target Windows installation in an elevated PowerShell.
+    Safety features:
+      - Confirms before making changes unless -Force is used
+      - Refuses to proceed if a recovery partition already exists
+      - Verifies the system disk and available shrink room before resizing C:
 .PARAMETER WinReWimPath
     Path to an already extracted winre.wim file.
 .PARAMETER RecoverySizeMB
@@ -15,7 +18,9 @@
 .PARAMETER DriveLetter
     Temporary drive letter used for the recovery partition while copying files. Default: R
 .PARAMETER ShrinkOSDrive
-    If set, the script shrinks the C: partition to make room if necessary.
+    If set, the script shrinks the C: partition to make room at the end of the disk if necessary.
+.PARAMETER Force
+    Skip the confirmation prompt.
 .EXAMPLE
     .\apply-winre-recovery.ps1 -WinReWimPath C:\Temp\WinRE\winre.wim -ShrinkOSDrive
 #>
@@ -25,12 +30,14 @@ param(
     [ValidateScript({ Test-Path $_ })]
     [string]$WinReWimPath,
 
+    [ValidateRange(512, 4096)]
     [int]$RecoverySizeMB = 1024,
 
     [ValidatePattern('^[A-Z]$')]
     [string]$DriveLetter = 'R',
 
-    [switch]$ShrinkOSDrive
+    [switch]$ShrinkOSDrive,
+    [switch]$Force
 )
 
 $ErrorActionPreference = 'Stop'
@@ -65,35 +72,51 @@ function Get-SystemDiskNumber {
     return $cPart.DiskNumber
 }
 
-function Ensure-FreeSpace {
+function Confirm-Action {
+    if ($Force) { return }
+    Write-Host ""
+    Write-Warn "이 작업은 디스크 파티션을 변경합니다."
+    $answer = Read-Host "계속하려면 YES를 입력하세요"
+    if ($answer -ne 'YES') {
+        throw '사용자 취소.'
+    }
+}
+
+function Test-RecoveryPartitionExists {
+    $existing = Get-Partition -ErrorAction SilentlyContinue | Where-Object {
+        $_.GptType -eq "{$RecoveryGuid}" -or $_.GptType -eq $RecoveryGuid
+    }
+    return [bool]$existing
+}
+
+function Ensure-FreeSpaceAtEnd {
     param(
         [int]$DiskNumber,
         [int]$NeededMB
     )
 
-    $disk = Get-Disk -Number $DiskNumber
-    $unallocatedMB = [math]::Round(($disk.Size - ($disk.AllocatedSize ?? 0)) / 1MB)
-
-    if ($unallocatedMB -ge $NeededMB) {
-        Write-OK "Enough unallocated space already available: $unallocatedMB MB"
-        return
-    }
-
-    if (-not $ShrinkOSDrive) {
-        throw "Not enough unallocated space ($unallocatedMB MB). Re-run with -ShrinkOSDrive to shrink C:."
-    }
-
-    Write-Warn "Shrinking C: to free about $NeededMB MB..."
+    $cPart = Get-Partition -DriveLetter C -ErrorAction Stop
     $supported = Get-PartitionSupportedSize -DriveLetter C
-    $current = (Get-Partition -DriveLetter C).Size
-    $target = $current - ($NeededMB * 1MB)
+    $currentSize = $cPart.Size
+    $minSize = $supported.SizeMin
+    $targetSize = $currentSize - ($NeededMB * 1MB)
 
-    if ($target -lt $supported.SizeMin) {
-        throw "Cannot shrink C: enough. Supported minimum is too large."
+    if ($targetSize -lt $minSize) {
+        throw ("C:를 {0}MB 만큼 줄일 수 없습니다. 최소 허용 크기보다 작아집니다. (현재: {1}MB, 최소: {2}MB)" -f $NeededMB, [math]::Round($currentSize/1MB), [math]::Round($minSize/1MB))
     }
 
-    Resize-Partition -DriveLetter C -Size $target
-    Write-OK "C: resized."
+    if ($currentSize -eq $supported.SizeMax) {
+        Write-Warn "C:가 이미 최대 크기입니다. 필요하면 줄입니다."
+    }
+
+    if ($ShrinkOSDrive) {
+        Write-Warn ("C:의 마지막 부분에서 약 {0}MB를 확보합니다..." -f $NeededMB)
+        Resize-Partition -DriveLetter C -Size $targetSize
+        Write-OK "C: resized to make room at the end of the disk."
+    }
+    else {
+        Write-Warn "추가 여유 공간이 필요할 수 있습니다. -ShrinkOSDrive를 사용하면 C:를 줄여 자동으로 공간을 만듭니다."
+    }
 }
 
 function Create-RecoveryPartition {
@@ -133,7 +156,6 @@ exit
 }
 
 Assert-Admin
-
 $WinReWimPath = (Resolve-Path $WinReWimPath).Path
 $TargetRoot = 'C:\Windows'
 $RecoveryVolume = "$DriveLetter:`"
@@ -142,6 +164,13 @@ Write-Step 'Input'
 Write-Host "WinRE source : $WinReWimPath"
 Write-Host "Recovery size: $RecoverySizeMB MB"
 Write-Host "Drive letter : $DriveLetter"
+Write-Host "Shrink C:    : $ShrinkOSDrive"
+
+if (Test-RecoveryPartitionExists) {
+    throw '이미 복구 파티션이 존재합니다. 기존 파티션을 제거한 뒤 다시 시도하세요.'
+}
+
+Confirm-Action
 
 Write-Step 'Disable WinRE'
 reagentc /disable | Out-Host
@@ -151,15 +180,15 @@ $diskNumber = Get-SystemDiskNumber
 Write-OK "System disk number: $diskNumber"
 
 Write-Step 'Make sure space exists'
-Ensure-FreeSpace -DiskNumber $diskNumber -NeededMB $RecoverySizeMB
+Ensure-FreeSpaceAtEnd -DiskNumber $diskNumber -NeededMB $RecoverySizeMB
 
-Write-Step 'Create recovery partition'
+Write-Step 'Create recovery partition at the end of C:'
 Create-RecoveryPartition -DiskNumber $diskNumber -SizeMB $RecoverySizeMB -Letter $DriveLetter
 
 Write-Step 'Prepare WinRE folder'
 New-Item -ItemType Directory -Path "$RecoveryVolume\Recovery\WindowsRE" -Force | Out-Null
 Copy-Item -Path $WinReWimPath -Destination "$RecoveryVolume\Recovery\WindowsRE\winre.wim" -Force
-Write-OK "Copied winre.wim to $RecoveryVolume\Recovery\WindowsRE\winre.wim"
+Write-OK "Copied winre.wim to $RecoveryVolume\Recovery\WindowsRE\winre.wim (C: 뒤쪽 복구 파티션)"
 
 Write-Step 'Register WinRE'
 reagentc /setreimage /path "$RecoveryVolume\Recovery\WindowsRE" /target $TargetRoot | Out-Host
