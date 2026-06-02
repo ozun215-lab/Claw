@@ -1,0 +1,59 @@
+# OpenClaw / local runtime
+.openclaw/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Dependency / build outputs
+node_modules/
+dist/
+build/
+coverage/
+.next/
+.cache/
+tmp/
+temp/
+out/
+bin/
+obj/
+
+# Logs
+*.log
+memory/*.log
+
+# Generated exports / artifacts
+*.pdf
+*.html
+*.htm
+*.docx
+*.xlsx
+*.csv
+*.rtf
+*.hwpx
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+*.mov
+*.wav
+*.mp3
+*.zip
+*.7z
+*.tar
+*.gz
+
+# Python / misc caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local env
+.env
+.env.*

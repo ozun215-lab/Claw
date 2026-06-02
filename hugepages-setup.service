@@ -1,0 +1,17 @@
+[Unit]
+Description=Allocate HugePages for KVM/libvirt at boot
+# 네트워크 불필요, 디스크 마운트 후, libvirtd 기동 전에 실행
+After=local-fs.target
+Before=libvirtd.service libvirt-guests.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/hugepages-setup.sh
+# 실패해도 부팅 중단하지 않음
+SuccessExitStatus=0 1
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
