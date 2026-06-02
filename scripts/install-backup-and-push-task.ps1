@@ -1,6 +1,6 @@
 param(
   [string]$ScriptPath = 'D:\Claw\workspace\scripts\backup-and-push.ps1',
-  [string]$TaskName = 'Claw Backup And Push',
+  [string]$TaskName = 'Claw Sync',
   [string]$Time = '18:00'
 )
 
