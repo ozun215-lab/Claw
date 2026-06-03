@@ -1,16 +1,15 @@
 # USER.md - About Your Human
 
-_Learn about the person you're helping. Update this as you go._
-
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
+- **Name:** 박영준
+- **What to call them:** 영준
+- **Pronouns:** he/him
+- **Timezone:** Asia/Seoul (KST)
+- **Email:** zunn@eactive.co.kr
+- **Notes:** 편하게 반말 선호
 
 ## Context
 
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
+_(아직 알아가는 중. 대화하면서 채워나갈 예정.)_
 
 ---
 
