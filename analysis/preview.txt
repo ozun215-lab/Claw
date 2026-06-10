@@ -1,0 +1,274 @@
+﻿python.exe : D:\Claw\workspace\analysis\analyze.py:53: DeprecationWarning: The 'text' argument to find()-type methods i
+s deprecated. Use 'string' instead.
+위치 줄:2 문자:1
++ & $pyExe "D:\Claw\workspace\analysis\analyze.py" 2>&1 | Out-File -Fil ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\Claw\workspa...tring' instead.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  for el in soup.find_all(text=True):
+====================================================================================================
+FILE: 嫄곕옒?댁뿭議고쉶_?낆텧??異쒕젰??20260609-21-012.xls
+SIZE: 361819 bytes
+DETECTED ENCODING: utf-8
+--- HTML head preview ---
+<html><head><meta http-equiv='Content-Type' content='application/vnd.ms-excel;charset=utf-8'><style type='text/css'>/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:befor
+--- end preview ---
+
+--- top text lines ---
+/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:before, q:after {content: '';}input, select, button, textarea {}input, select {vertical-align:middle;}input.button, input.submit , input.image, button {cursor:pointer;}hr {display:none}caption {left:-9999px; width:0.01em; height:0.01em; font-size:0.1em; line-height:0.01em; overflow:hidden;}a:link, a:visited {text-decoration:none;}a:active, a:hover {text-decoration:underline}.cboth {clear:both;}img {vertical-align:middle;}/*basic*/html,body {height:100%;}body {margin:0; padding:0; font-family:Dotum,Gulim,Tahoma,Arial,sans-serif; font-size:12px; color:#575757; width:100%; background:#fff; line-height:16px;}.xls_cont {width:100%; padding:10px;}table.type1 {width:100%; border-top:2px solid  #66b9ed;}table.type1 th {padding:15px 0; font-size:14px; border:1px solid #cedce7; background:#f6f9fc;}table.type1 td {padding:10px; border:1px solid #cedce7;}table.type2 {margin-top:20px; width:100%;}table.type2 th {padding:9px 5px 7px; border:1px solid #e5e5e5; background:#f5f5f5;}table.type2 td {padding:9px 5px 7px; border:1px solid #e5e5e5;}table.type2 td.left {text-align:left;}table.type2 td.right {text-align:right;}table.type2 td.total {font-weight:bold; color:#000; background:#f5f5f5; text-align:center;}table.type2 td.total2 {text-align:right; color:#000; font-weight:bold;}
+嫄곕옒?댁뿭議고쉶_?낆텧??
+怨꾩쥖踰덊샇 : 140-090845-01-012
+?덇툑二쇰챸 : 諛뺤쁺以
+?꾩옱?붿븸 : 0??
+議고쉶?쒖옉?쇱옄 : 2021-01-01
+議고쉶湲곗???: 2026-06-09 17:40
+?덇툑醫낅쪟 : 蹂댄넻?덇툑(IBK湲됱뿬?듭옣)
+異쒓툑媛?κ툑??: 0??
+議고쉶醫낅즺?쇱옄 : 2021-12-31
+No
+嫄곕옒?쇱떆
+異쒓툑
+?낃툑
+嫄곕옒???붿븸
+嫄곕옒?댁슜
+?↔툑硫붿떆吏
+?곷?怨꾩쥖踰덊샇
+?곷????
+嫄곕옒援щ텇
+?섑몴?댁쓬湲덉븸
+CMS肄붾뱶
+?곷?怨꾩쥖?덇툑二쇰챸
+1
+2021-12-31 18:58:03
+0
+200,000
+7,544,001
+諛뺤쁺以
+?섎굹???
+??됱씠泥?
+0
+竊덉＜竊됰퉬諛붾━?쇰툝由ъ뭅
+2
+2021-12-31 16:10:45
+0
+6,163,120
+7,344,001
+?곸뿬湲?
+湲곗뾽???
+read_html error: invalid literal for int() with base 10: '6.5'
+
+Found 0 tables
+
+====================================================================================================
+FILE: 嫄곕옒?댁뿭議고쉶_?낆텧??異쒕젰??20260609-21-022.xls
+SIZE: 64370 bytes
+DETECTED ENCODING: utf-8
+--- HTML head preview ---
+<html><head><meta http-equiv='Content-Type' content='application/vnd.ms-excel;charset=utf-8'><style type='text/css'>/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:befor
+--- end preview ---
+
+--- top text lines ---
+/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:before, q:after {content: '';}input, select, button, textarea {}input, select {vertical-align:middle;}input.button, input.submit , input.image, button {cursor:pointer;}hr {display:none}caption {left:-9999px; width:0.01em; height:0.01em; font-size:0.1em; line-height:0.01em; overflow:hidden;}a:link, a:visited {text-decoration:none;}a:active, a:hover {text-decoration:underline}.cboth {clear:both;}img {vertical-align:middle;}/*basic*/html,body {height:100%;}body {margin:0; padding:0; font-family:Dotum,Gulim,Tahoma,Arial,sans-serif; font-size:12px; color:#575757; width:100%; background:#fff; line-height:16px;}.xls_cont {width:100%; padding:10px;}table.type1 {width:100%; border-top:2px solid  #66b9ed;}table.type1 th {padding:15px 0; font-size:14px; border:1px solid #cedce7; background:#f6f9fc;}table.type1 td {padding:10px; border:1px solid #cedce7;}table.type2 {margin-top:20px; width:100%;}table.type2 th {padding:9px 5px 7px; border:1px solid #e5e5e5; background:#f5f5f5;}table.type2 td {padding:9px 5px 7px; border:1px solid #e5e5e5;}table.type2 td.left {text-align:left;}table.type2 td.right {text-align:right;}table.type2 td.total {font-weight:bold; color:#000; background:#f5f5f5; text-align:center;}table.type2 td.total2 {text-align:right; color:#000; font-weight:bold;}
+嫄곕옒?댁뿭議고쉶_?낆텧??
+怨꾩쥖踰덊샇 : 140-090845-01-020
+?덇툑二쇰챸 : 諛뺤쁺以
+?꾩옱?붿븸 : 5,020??
+議고쉶?쒖옉?쇱옄 : 2021-01-01
+議고쉶湲곗???: 2026-06-09 17:40
+?덇툑醫낅쪟 : 蹂댄넻?덇툑
+異쒓툑媛?κ툑??: 5,020??
+議고쉶醫낅즺?쇱옄 : 2021-12-31
+No
+嫄곕옒?쇱떆
+異쒓툑
+?낃툑
+嫄곕옒???붿븸
+嫄곕옒?댁슜
+?↔툑硫붿떆吏
+?곷?怨꾩쥖踰덊샇
+?곷????
+嫄곕옒援щ텇
+?섑몴?댁쓬湲덉븸
+CMS肄붾뱶
+?곷?怨꾩쥖?덇툑二쇰챸
+1
+2021-01-04 09:30:51
+0
+1,265,951
+1,266,030
+諛뺤쁺以
+湲곗뾽???
+?ㅻ쭏?몃콉??
+0
+諛뺤쁺以
+2
+2021-01-04 10:49:59
+1,065,951
+0
+200,079
+?異쒖썝由ш툑?곹솚
+1400908453200049
+read_html error: invalid literal for int() with base 10: '6.5'
+
+Found 0 tables
+
+====================================================================================================
+FILE: 嫄곕옒?댁뿭議고쉶_?낆텧??異쒕젰??20260609-21-044.xls
+SIZE: 12594 bytes
+DETECTED ENCODING: utf-8
+--- HTML head preview ---
+<html><head><meta http-equiv='Content-Type' content='application/vnd.ms-excel;charset=utf-8'><style type='text/css'>/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:befor
+--- end preview ---
+
+--- top text lines ---
+/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:before, q:after {content: '';}input, select, button, textarea {}input, select {vertical-align:middle;}input.button, input.submit , input.image, button {cursor:pointer;}hr {display:none}caption {left:-9999px; width:0.01em; height:0.01em; font-size:0.1em; line-height:0.01em; overflow:hidden;}a:link, a:visited {text-decoration:none;}a:active, a:hover {text-decoration:underline}.cboth {clear:both;}img {vertical-align:middle;}/*basic*/html,body {height:100%;}body {margin:0; padding:0; font-family:Dotum,Gulim,Tahoma,Arial,sans-serif; font-size:12px; color:#575757; width:100%; background:#fff; line-height:16px;}.xls_cont {width:100%; padding:10px;}table.type1 {width:100%; border-top:2px solid  #66b9ed;}table.type1 th {padding:15px 0; font-size:14px; border:1px solid #cedce7; background:#f6f9fc;}table.type1 td {padding:10px; border:1px solid #cedce7;}table.type2 {margin-top:20px; width:100%;}table.type2 th {padding:9px 5px 7px; border:1px solid #e5e5e5; background:#f5f5f5;}table.type2 td {padding:9px 5px 7px; border:1px solid #e5e5e5;}table.type2 td.left {text-align:left;}table.type2 td.right {text-align:right;}table.type2 td.total {font-weight:bold; color:#000; background:#f5f5f5; text-align:center;}table.type2 td.total2 {text-align:right; color:#000; font-weight:bold;}
+嫄곕옒?댁뿭議고쉶_?낆텧??
+怨꾩쥖踰덊샇 : 140-090845-01-044
+?덇툑二쇰챸 : 諛뺤쁺以
+?꾩옱?붿븸 : 319??
+議고쉶?쒖옉?쇱옄 : 2021-01-01
+議고쉶湲곗???: 2026-06-09 17:40
+?덇툑醫낅쪟 : 蹂댄넻?덇툑
+異쒓툑媛?κ툑??: 319??
+議고쉶醫낅즺?쇱옄 : 2021-12-31
+No
+嫄곕옒?쇱떆
+異쒓툑
+?낃툑
+嫄곕옒???붿븸
+嫄곕옒?댁슜
+?↔툑硫붿떆吏
+?곷?怨꾩쥖踰덊샇
+?곷????
+嫄곕옒援щ텇
+?섑몴?댁쓬湲덉븸
+CMS肄붾뱶
+?곷?怨꾩쥖?덇툑二쇰챸
+1
+2021-12-12 11:39:03
+0
+2
+5,766
+2021?꾧껐??
+?댁옄
+0
+2
+2021-07-30 17:37:38
+0
+1
+5,764
+?ㅼ씠踰꾪럹??
+?좏븳???
+??됱씠泥?
+0
+read_html error: invalid literal for int() with base 10: '6.5'
+
+Found 0 tables
+
+====================================================================================================
+FILE: 嫄곕옒?댁뿭議고쉶_?낆텧??異쒕젰??20260609-22-022.xls
+SIZE: 33379 bytes
+DETECTED ENCODING: utf-8
+--- HTML head preview ---
+<html><head><meta http-equiv='Content-Type' content='application/vnd.ms-excel;charset=utf-8'><style type='text/css'>/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:befor
+--- end preview ---
+
+--- top text lines ---
+/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:before, q:after {content: '';}input, select, button, textarea {}input, select {vertical-align:middle;}input.button, input.submit , input.image, button {cursor:pointer;}hr {display:none}caption {left:-9999px; width:0.01em; height:0.01em; font-size:0.1em; line-height:0.01em; overflow:hidden;}a:link, a:visited {text-decoration:none;}a:active, a:hover {text-decoration:underline}.cboth {clear:both;}img {vertical-align:middle;}/*basic*/html,body {height:100%;}body {margin:0; padding:0; font-family:Dotum,Gulim,Tahoma,Arial,sans-serif; font-size:12px; color:#575757; width:100%; background:#fff; line-height:16px;}.xls_cont {width:100%; padding:10px;}table.type1 {width:100%; border-top:2px solid  #66b9ed;}table.type1 th {padding:15px 0; font-size:14px; border:1px solid #cedce7; background:#f6f9fc;}table.type1 td {padding:10px; border:1px solid #cedce7;}table.type2 {margin-top:20px; width:100%;}table.type2 th {padding:9px 5px 7px; border:1px solid #e5e5e5; background:#f5f5f5;}table.type2 td {padding:9px 5px 7px; border:1px solid #e5e5e5;}table.type2 td.left {text-align:left;}table.type2 td.right {text-align:right;}table.type2 td.total {font-weight:bold; color:#000; background:#f5f5f5; text-align:center;}table.type2 td.total2 {text-align:right; color:#000; font-weight:bold;}
+嫄곕옒?댁뿭議고쉶_?낆텧??
+怨꾩쥖踰덊샇 : 140-090845-01-020
+?덇툑二쇰챸 : 諛뺤쁺以
+?꾩옱?붿븸 : 5,020??
+議고쉶?쒖옉?쇱옄 : 2022-01-01
+議고쉶湲곗???: 2026-06-09 17:40
+?덇툑醫낅쪟 : 蹂댄넻?덇툑
+異쒓툑媛?κ툑??: 5,020??
+議고쉶醫낅즺?쇱옄 : 2022-12-31
+No
+嫄곕옒?쇱떆
+異쒓툑
+?낃툑
+嫄곕옒???붿븸
+嫄곕옒?댁슜
+?↔툑硫붿떆吏
+?곷?怨꾩쥖踰덊샇
+?곷????
+嫄곕옒援щ텇
+?섑몴?댁쓬湲덉븸
+CMS肄붾뱶
+?곷?怨꾩쥖?덇툑二쇰챸
+1
+2022-01-03 07:09:35
+1,199,245
+206,326,640
+?댁옄-32-00049 ?ㅼ쓬?⑹엯?덉젙??20220202
+1400908453200049
+CC
+0
+2
+2022-01-03 12:44:49
+40,000,000
+166,326,640
+?꾩꽭怨꾩빟湲?
+110406712671
+?좏븳???
+?ㅻ쭏?몃콉??
+0
+read_html error: invalid literal for int() with base 10: '6.5'
+
+Found 0 tables
+
+====================================================================================================
+FILE: 嫄곕옒?댁뿭議고쉶_?낆텧??異쒕젰??20260609-22-044.xls
+SIZE: 15840 bytes
+DETECTED ENCODING: utf-8
+--- HTML head preview ---
+<html><head><meta http-equiv='Content-Type' content='application/vnd.ms-excel;charset=utf-8'><style type='text/css'>/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:befor
+--- end preview ---
+
+--- top text lines ---
+/*reset*/h1, h2, h3, h4, h5, h6,div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr {margin:0; padding:0;}h1, h2, h3, h4, h5, h6 {font-size:100%;}ul, ol, li {list-style:none;}table {margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse;}*+html table {border-collapse:collapse;}img, fieldset, abbr, acronym {border:0;}address, caption, cite, code, dfn, em, var {font-style:normal; font-weight:normal;}q:before, q:after {content: '';}input, select, button, textarea {}input, select {vertical-align:middle;}input.button, input.submit , input.image, button {cursor:pointer;}hr {display:none}caption {left:-9999px; width:0.01em; height:0.01em; font-size:0.1em; line-height:0.01em; overflow:hidden;}a:link, a:visited {text-decoration:none;}a:active, a:hover {text-decoration:underline}.cboth {clear:both;}img {vertical-align:middle;}/*basic*/html,body {height:100%;}body {margin:0; padding:0; font-family:Dotum,Gulim,Tahoma,Arial,sans-serif; font-size:12px; color:#575757; width:100%; background:#fff; line-height:16px;}.xls_cont {width:100%; padding:10px;}table.type1 {width:100%; border-top:2px solid  #66b9ed;}table.type1 th {padding:15px 0; font-size:14px; border:1px solid #cedce7; background:#f6f9fc;}table.type1 td {padding:10px; border:1px solid #cedce7;}table.type2 {margin-top:20px; width:100%;}table.type2 th {padding:9px 5px 7px; border:1px solid #e5e5e5; background:#f5f5f5;}table.type2 td {padding:9px 5px 7px; border:1px solid #e5e5e5;}table.type2 td.left {text-align:left;}table.type2 td.right {text-align:right;}table.type2 td.total {font-weight:bold; color:#000; background:#f5f5f5; text-align:center;}table.type2 td.total2 {text-align:right; color:#000; font-weight:bold;}
+嫄곕옒?댁뿭議고쉶_?낆텧??
+怨꾩쥖踰덊샇 : 140-090845-01-044
+?덇툑二쇰챸 : 諛뺤쁺以
+?꾩옱?붿븸 : 319??
+議고쉶?쒖옉?쇱옄 : 2022-01-01
+議고쉶湲곗???: 2026-06-09 17:40
+?덇툑醫낅쪟 : 蹂댄넻?덇툑
+異쒓툑媛?κ툑??: 319??
+議고쉶醫낅즺?쇱옄 : 2022-12-31
+No
+嫄곕옒?쇱떆
+異쒓툑
+?낃툑
+嫄곕옒???붿븸
+嫄곕옒?댁슜
+?↔툑硫붿떆吏
+?곷?怨꾩쥖踰덊샇
+?곷????
+嫄곕옒援щ텇
+?섑몴?댁쓬湲덉븸
+CMS肄붾뱶
+?곷?怨꾩쥖?덇툑二쇰챸
+1
+2022-12-11 12:01:08
+0
+319
+319
+2022?꾧껐??
+?댁옄
+0
+2
+2022-06-17 10:10:09
+15,001,702
+0
+0
+諛뺤쁺以
+140-090845-01-012
+湲곗뾽???
+?ㅻ쭏?몃콉??
+read_html error: invalid literal for int() with base 10: '6.5'
+
+Found 0 tables
+
