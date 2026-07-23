@@ -7,9 +7,9 @@ async function pub(endpoint, params = {}) {
 }
 
 (async () => {
-  const symbol = 'BEATUSDT';
+  const symbol = 'ONDOUSDT';
   
-  console.log(`=== BEATUSDT Analysis ===`);
+  console.log(`=== ONDOUSDT Analysis ===`);
   console.log(`Time: ${new Date().toISOString()}\n`);
   
   const t = (await pub('/v5/market/tickers', { category: 'linear', symbol })).result?.list?.[0];
@@ -30,17 +30,17 @@ async function pub(endpoint, params = {}) {
   const pos24 = ((price - low24) / (high24 - low24) * 100).toFixed(1);
   console.log(`24h Position: ${pos24}%\n`);
   
-  console.log('=== Daily (last 10) ===');
-  const kd = await pub('/v5/market/kline', { category: 'linear', symbol, interval: 'D', limit: '10' });
+  console.log('=== Daily (last 15) ===');
+  const kd = await pub('/v5/market/kline', { category: 'linear', symbol, interval: 'D', limit: '15' });
   (kd.result?.list || []).reverse().forEach(r => {
     const dt = new Date(parseInt(r[0])).toISOString().slice(5,10);
     const o = parseFloat(r[1]), c = parseFloat(r[4]);
     const pct = ((c-o)/o*100).toFixed(2);
-    console.log(`${dt} O:$${parseFloat(r[1]).toFixed(4)} H:$${parseFloat(r[2]).toFixed(4)} L:$${parseFloat(r[3]).toFixed(4)} C:$${parseFloat(r[4]).toFixed(4)} ${pct}%`);
+    console.log(`${dt} O:$${o.toFixed(4)} H:$${parseFloat(r[2]).toFixed(4)} L:$${parseFloat(r[3]).toFixed(4)} C:$${c.toFixed(4)} ${pct}%`);
   });
   
-  console.log('\n=== 4h (last 8) ===');
-  const k4 = await pub('/v5/market/kline', { category: 'linear', symbol, interval: '240', limit: '8' });
+  console.log('\n=== 4h (last 12) ===');
+  const k4 = await pub('/v5/market/kline', { category: 'linear', symbol, interval: '240', limit: '12' });
   (k4.result?.list || []).reverse().forEach(r => {
     const dt = new Date(parseInt(r[0])).toISOString().replace('T',' ').slice(0,16);
     const o = parseFloat(r[1]), c = parseFloat(r[4]);
@@ -48,8 +48,8 @@ async function pub(endpoint, params = {}) {
     console.log(`${dt} O:$${o.toFixed(4)} H:$${parseFloat(r[2]).toFixed(4)} L:$${parseFloat(r[3]).toFixed(4)} C:$${c.toFixed(4)} ${pct}%`);
   });
   
-  console.log('\n=== 1h (last 6) ===');
-  const k1 = await pub('/v5/market/kline', { category: 'linear', symbol, interval: '60', limit: '6' });
+  console.log('\n=== 1h (last 8) ===');
+  const k1 = await pub('/v5/market/kline', { category: 'linear', symbol, interval: '60', limit: '8' });
   (k1.result?.list || []).reverse().forEach(r => {
     const dt = new Date(parseInt(r[0])).toISOString().replace('T',' ').slice(0,16);
     const o = parseFloat(r[1]), c = parseFloat(r[4]);
@@ -57,8 +57,8 @@ async function pub(endpoint, params = {}) {
     console.log(`${dt} O:$${o.toFixed(4)} H:$${parseFloat(r[2]).toFixed(4)} L:$${parseFloat(r[3]).toFixed(4)} C:$${c.toFixed(4)} ${pct}%`);
   });
   
-  console.log('\n=== Funding (last 4) ===');
-  const fr = await pub('/v5/market/funding/history', { category: 'linear', symbol, limit: '4' });
+  console.log('\n=== Funding (last 6) ===');
+  const fr = await pub('/v5/market/funding/history', { category: 'linear', symbol, limit: '6' });
   (fr.result?.list || []).forEach(f => {
     console.log(`${new Date(parseInt(f.fundingRateTimestamp)).toISOString().slice(0,16).replace('T',' ')}  ${(parseFloat(f.fundingRate)*100).toFixed(4)}%`);
   });
