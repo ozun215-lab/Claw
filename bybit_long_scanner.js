@@ -7,7 +7,7 @@ async function pub(endpoint, params = {}) {
 }
 
 (async () => {
-  console.log('=== Bybit Short Scanner ===');
+  console.log('=== Bybit Long Scanner ===');
   console.log(`Time: ${new Date().toISOString()}\n`);
   
   const instruments = await pub('/v5/market/instruments-info', { 
@@ -53,25 +53,29 @@ async function pub(endpoint, params = {}) {
         const pricePos = ((price - low24) / (high24 - low24) * 100);
         const range = ((high24 - low24) / low24 * 100);
         
+        // LONG scoring: inverse of short logic
         let score = 0;
         let reasons = [];
         
-        if (chg24 > 5) { score -= 10; reasons.push('overbought'); }
-        else if (chg24 > 2) { score -= 5; reasons.push('rising'); }
-        else if (chg24 < -5) { score += 10; reasons.push('oversold_bounce'); }
+        // 1. 24h change: oversold = long opportunity
+        if (chg24 < -10) { score += 15; reasons.push('crashed'); }
+        else if (chg24 < -5) { score += 10; reasons.push('oversold'); }
         else if (chg24 < -2) { score += 5; reasons.push('falling'); }
+        else if (chg24 > 5) { score -= 10; reasons.push('overbought'); }
         
-        if (pricePos > 80) { score += 20; reasons.push('24h_top'); }
-        else if (pricePos > 60) { score += 15; reasons.push('24h_upper'); }
-        else if (pricePos < 20) { score -= 15; reasons.push('24h_bottom'); }
-        else if (pricePos < 40) { score -= 10; reasons.push('24h_lower'); }
+        // 2. 24h range position: bottom = long opportunity
+        if (pricePos < 20) { score += 20; reasons.push('24h_bottom'); }
+        else if (pricePos < 40) { score += 15; reasons.push('24h_lower'); }
+        else if (pricePos > 80) { score -= 15; reasons.push('24h_top'); }
+        else if (pricePos > 60) { score -= 10; reasons.push('24h_upper'); }
         
-        // Positive funding = longs pay shorts = GOOD for short position
-        if (fund > 0.05) { score += 15; reasons.push('fund_pos_shortEarns'); }
-        else if (fund > 0.01) { score += 10; reasons.push('fund_pos_shortEarns'); }
-        else if (fund < -0.1) { score -= 20; reasons.push('fund_neg_shortPays!'); }
-        else if (fund < -0.03) { score -= 10; reasons.push('fund_neg_shortPays'); }
+        // 3. Negative funding = shorts pay longs = GOOD for long position
+        if (fund < -0.05) { score += 15; reasons.push('fund_neg_longEarns'); }
+        else if (fund < -0.01) { score += 10; reasons.push('fund_neg_longEarns'); }
+        else if (fund > 0.1) { score -= 20; reasons.push('fund_pos_longPays!'); }
+        else if (fund > 0.03) { score -= 10; reasons.push('fund_pos_longPays'); }
         
+        // 4. Volume
         if (vol24 > 100) { score += 5; reasons.push('vol_high'); }
         else if (vol24 > 50) { score += 3; reasons.push('vol_med'); }
         else if (vol24 < 1) { score -= 5; reasons.push('vol_low'); }
@@ -100,19 +104,16 @@ async function pub(endpoint, params = {}) {
   
   candidates.sort((a, b) => b.score - a.score);
   
-  console.log(`\n=== TOP ${Math.min(candidates.length, 20)} Short Candidates ===\n`);
+  console.log(`\n=== TOP ${Math.min(candidates.length, 20)} Long Candidates ===\n`);
   console.log('Rank | Symbol | Price | 24h% | Funding | Vol$M | OI$M | Range% | Pos% | Score | Reasons');
   console.log('-----|--------|-------|------|---------|-------|-------|--------|------|-------|--------');
   
   candidates.slice(0, 20).forEach((c, i) => {
-    const chgEmoji = parseFloat(c.chg24) > 0 ? 'UP' : 'DN';
-    const fundEmoji = parseFloat(c.fund) < 0 ? 'NEG' : 'POS';
-    console.log(`${(i+1).toString().padStart(2)} | ${c.symbol.padEnd(6)} | $${c.price.padEnd(10)} | ${c.chg24.padStart(6)}% ${chgEmoji} | ${c.fund}% ${fundEmoji} | $${c.vol24.padStart(6)}M | $${c.oi.padStart(5)}M | ${c.range.padStart(5)}% | ${c.pricePos.padStart(3)}% | ${c.score.toString().padStart(3)} | ${c.reasons}`);
+    console.log(`${(i+1).toString().padStart(2)} | ${c.symbol.padEnd(6)} | $${c.price.padEnd(10)} | ${c.chg24.padStart(6)}% | ${c.fund}% | $${c.vol24.padStart(6)}M | $${c.oi.padStart(5)}M | ${c.range.padStart(5)}% | ${c.pricePos.padStart(3)}% | ${c.score.toString().padStart(3)} | ${c.reasons}`);
   });
   
   console.log(`\nTotal candidates: ${candidates.length} / ${symbols.length}\n`);
   
-  // Detailed analysis TOP 5
   if (candidates.length > 0) {
     console.log('=== TOP 5 Detail ===\n');
     
@@ -137,17 +138,16 @@ async function pub(endpoint, params = {}) {
           const dt = new Date(parseInt(r[0])).toISOString().slice(11,16);
           const o = parseFloat(r[1]), h = parseFloat(r[2]), l = parseFloat(r[3]), cl = parseFloat(r[4]);
           const pct = ((cl-o)/o*100).toFixed(2);
-          const em = parseFloat(pct) > 0 ? 'RED' : 'GREEN';
-          console.log(`  ${dt} O:$${o.toFixed(4)} H:$${h.toFixed(4)} L:$${l.toFixed(4)} C:$${cl.toFixed(4)} ${pct}% ${em}`);
+          console.log(`  ${dt} O:$${o.toFixed(4)} H:$${h.toFixed(4)} L:$${l.toFixed(4)} C:$${cl.toFixed(4)} ${pct}%`);
         });
       }
       
       const price = parseFloat(c.price);
-      console.log(`\nSuggested SL/TP (short, 2x):`);
+      console.log(`\nSuggested SL/TP (long, 2x):`);
       console.log(`  Entry: $${price.toFixed(4)}`);
-      console.log(`  SL: $${(price * 1.03).toFixed(4)} (+3%)`);
-      console.log(`  TP1: $${(price * 0.95).toFixed(4)} (-5%)`);
-      console.log(`  TP2: $${(price * 0.90).toFixed(4)} (-10%)`);
+      console.log(`  SL: $${(price * 0.97).toFixed(4)} (-3%)`);
+      console.log(`  TP1: $${(price * 1.05).toFixed(4)} (+5%)`);
+      console.log(`  TP2: $${(price * 1.10).toFixed(4)} (+10%)`);
     }
   }
   
