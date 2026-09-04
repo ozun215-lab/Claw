@@ -68,20 +68,16 @@ echo "[4/4] MySQL credentials configuration..."
 if [ ! -f "/root/.my.cnf" ]; then
     echo ""
     echo "⚠️ /root/.my.cnf not found"
-    echo "Create it with the following content:"
-    cat <<EOF
-    
+    echo "Creating /root/.my.cnf..."
+    cat > /root/.my.cnf <<EOF
 [client]
 user=root
-password=YOUR_PASSWORD
+password=gooroom
 host=localhost
 port=3306
 EOF
-    echo ""
-    echo "Or use environment variables when running the script:"
-    echo "  export MYSQL_HOST=localhost"
-    echo "  export MYSQL_USER=root"
-    echo "  export MYSQL_PASS=password"
+    chmod 600 /root/.my.cnf
+    echo "✅ /root/.my.cnf created"
 else
     echo "✅ /root/.my.cnf already exists"
 fi

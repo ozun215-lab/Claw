@@ -10,10 +10,8 @@
 set -e
 
 # 설정
-MYSQL_HOST="${MYSQL_HOST:-localhost}"
-MYSQL_PORT="${MYSQL_PORT:-3306}"
 MYSQL_USER="${MYSQL_USER:-root}"
-MYSQL_PASS="${MYSQL_PASS:-}"  # 비어있으면 /root/.my.cnf 사용
+MYSQL_PASS="${MYSQL_PASS:-gooroom}"  # 비밀번호 설정
 LOG_FILE="/var/log/galera-health-check.log"
 ALERT_LOG="/var/log/galera-alerts.log"
 
@@ -42,11 +40,8 @@ log_message() {
 
 run_mysql_query() {
     local query="$1"
-    if [ -z "$MYSQL_PASS" ]; then
-        mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u "$MYSQL_USER" -e "$query" -s -N 2>/dev/null || echo "ERROR"
-    else
-        mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u "$MYSQL_USER" -p"$MYSQL_PASS" -e "$query" -s -N 2>/dev/null || echo "ERROR"
-    fi
+    # 소켓으로 연결 (TCP 대신 로컬 소켓 사용)
+    mysql --socket=/GPMS/DBMS/DATA/mysql.sock -u "$MYSQL_USER" -p"$MYSQL_PASS" -sN -e "$query" 2>/dev/null || echo "ERROR"
 }
 
 send_email_alert() {
@@ -229,7 +224,7 @@ GPMS Galera Cluster Health Check
 ===============================================
 Timestamp: $timestamp
 Node: $node_name
-Host: $MYSQL_HOST:$MYSQL_PORT
+Host: $(hostname -I | awk '{print $1}'):3306
 Status: $status
 
 CLUSTER INFORMATION:

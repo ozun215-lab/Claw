@@ -53,6 +53,15 @@ async function pub(endpoint, params = {}) {
         const pricePos = ((price - low24) / (high24 - low24) * 100);
         const range = ((high24 - low24) / low24 * 100);
         
+        // Safety filters: reject if not suitable
+        const MIN_VOLUME = 5;
+        const MIN_FUNDING = -0.0001;
+        const MAX_PRICE = 50;
+        
+        if (vol24 < MIN_VOLUME || price > MAX_PRICE || fund > MIN_FUNDING) {
+          return; // Skip: too low volume, too expensive, or positive funding
+        }
+        
         // LONG scoring: inverse of short logic
         let score = 0;
         let reasons = [];
@@ -64,23 +73,32 @@ async function pub(endpoint, params = {}) {
         else if (chg24 > 5) { score -= 10; reasons.push('overbought'); }
         
         // 2. 24h range position: bottom = long opportunity
-        if (pricePos < 20) { score += 20; reasons.push('24h_bottom'); }
-        else if (pricePos < 40) { score += 15; reasons.push('24h_lower'); }
+        if (pricePos < 20) { score += 12; reasons.push('24h_bottom'); }
+        else if (pricePos < 40) { score += 10; reasons.push('24h_lower'); }
         else if (pricePos > 80) { score -= 15; reasons.push('24h_top'); }
         else if (pricePos > 60) { score -= 10; reasons.push('24h_upper'); }
         
         // 3. Negative funding = shorts pay longs = GOOD for long position
-        if (fund < -0.05) { score += 15; reasons.push('fund_neg_longEarns'); }
-        else if (fund < -0.01) { score += 10; reasons.push('fund_neg_longEarns'); }
-        else if (fund > 0.1) { score -= 20; reasons.push('fund_pos_longPays!'); }
-        else if (fund > 0.03) { score -= 10; reasons.push('fund_pos_longPays'); }
+        if (fund < -0.001) { 
+          const fundScore = Math.min(20, Math.abs(fund) * 10000);
+          score += fundScore;
+          reasons.push(`fund_neg_earn(${Math.abs(fund).toFixed(5)})`); 
+        }
+        else if (fund > 0.0001) { 
+          score -= 15; 
+          reasons.push('fund_pos_longPays'); 
+        }
         
         // 4. Volume
         if (vol24 > 100) { score += 5; reasons.push('vol_high'); }
         else if (vol24 > 50) { score += 3; reasons.push('vol_med'); }
-        else if (vol24 < 1) { score -= 5; reasons.push('vol_low'); }
+        else if (vol24 > 20) { score += 2; reasons.push('vol_ok'); }
         
-        if (score >= 10) {
+        // 5. Price position bonus: reversal potential
+        if (pricePos < 10) { score += 3; reasons.push('extreme_bottom'); }
+        
+        // Minimum score threshold: 12+ (stricter than before)
+        if (score >= 12) {
           candidates.push({
             symbol: symbol.replace('USDT',''),
             price: price.toFixed(price < 0.1 ? 6 : price < 10 ? 4 : 2),
@@ -140,6 +158,21 @@ async function pub(endpoint, params = {}) {
           const pct = ((cl-o)/o*100).toFixed(2);
           console.log(`  ${dt} O:$${o.toFixed(4)} H:$${h.toFixed(4)} L:$${l.toFixed(4)} C:$${cl.toFixed(4)} ${pct}%`);
         });
+        
+        // Analyze 4h reversal signal
+        if (k4.result.list.length >= 4) {
+          const candles = k4.result.list.reverse().slice(-3); // Last 3 candles
+          const c1_close = parseFloat(candles[0][4]);
+          const c2_close = parseFloat(candles[1][4]);
+          const c3_close = parseFloat(candles[2][4]);
+          
+          // Pattern: 3 red candles followed by 1 green = reversal signal
+          if (c3_close > c2_close && c2_close > c1_close && c1_close > c3_close) {
+            console.log('  ⚠️ Pattern: 3 down → reversal weak signal');
+          } else if (c1_close > c2_close && c2_close > c3_close) {
+            console.log('  ✅ Pattern: Continuous reversal (3 up) - Strong buy signal!');
+          }
+        }
       }
       
       const price = parseFloat(c.price);
