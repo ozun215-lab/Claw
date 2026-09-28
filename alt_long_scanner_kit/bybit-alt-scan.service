@@ -1,0 +1,14 @@
+[Unit]
+Description=Bybit 알트 롱 스캔 (30분 주기)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/path/to/scanner
+ExecStart=/usr/bin/python3 /path/to/scanner/alt_scan_runner.py --edge --alert-new --alert-min-score 70 --outdir reports
+StandardOutput=append:/path/to/scanner/logs/scan.log
+StandardError=append:/path/to/scanner/logs/scan.log
+
+[Install]
+WantedBy=multi-user.target

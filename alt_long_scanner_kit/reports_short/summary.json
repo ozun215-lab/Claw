@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "run_at": "2026-09-28 17:07:33 KST",
+  "scanned": 122,
+  "candidates": 0,
+  "alert_count": 0,
+  "gate_action": "ALLOW",
+  "gate_size": 1.0,
+  "gate_reasons": [
+    "브레드스 52% ≥ 50% — 확인 조건 충족"
+  ],
+  "gate_warnings": [
+    "선호 조건(거래량 ≥1.5× 또는 ATR ≥3%) 미충족 — 기대값이 기준선 수준"
+  ],
+  "alerts": [],
+  "top": [],
+  "error": null
+}

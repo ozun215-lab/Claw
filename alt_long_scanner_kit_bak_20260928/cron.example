@@ -1,0 +1,14 @@
+# 30분 주기 스캔 — cron 등록 예시 (본인 PC/서버용)
+#
+# 설치:  crontab -e  후 아래 두 줄을 붙여넣고 경로만 본인 환경에 맞게 수정
+# 확인:  crontab -l
+# 로그:  logs/scan.log
+
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+
+# ── 30분마다 실행 (edge 필터 · 신규 후보만 알림) ────────────────────────────
+*/30 * * * * cd /path/to/scanner && mkdir -p logs reports && /usr/bin/python3 alt_scan_runner.py --edge --alert-new --alert-min-score 70 --outdir reports >> logs/scan.log 2>&1
+
+# ── 매일 09:05 KST 에 하루치 이력 CSV 메일 발송 (mail 유틸 있을 때) ─────────
+5 9 * * * cd /path/to/scanner && /usr/bin/python3 -c "import smtplib,email.message as m,os;msg=m.EmailMessage();msg['Subject']='[알트롱] 일일 스캔 이력';msg['From']='me@example.com';msg['To']='me@example.com';msg.set_content('첨부된 history.csv 참고');msg.add_attachment(open('reports/history.csv','rb').read(),maintype='text',subtype='csv',filename='history.csv');s=smtplib.SMTP('smtp.example.com',587);s.starttls();s.login('me@example.com',os.environ['MAIL_PW']);s.send_message(msg)"

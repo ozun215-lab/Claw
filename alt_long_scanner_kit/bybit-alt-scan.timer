@@ -1,0 +1,12 @@
+[Unit]
+Description=Bybit 알트 롱 스캔 타이머 (30분마다)
+
+[Timer]
+# 부팅 3분 뒤 첫 실행 후, 30분 간격 반복
+OnBootSec=3min
+OnUnitActiveSec=30min
+Unit=bybit-alt-scan.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

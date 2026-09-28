@@ -1,0 +1,110 @@
+{
+  "run_at": "2026-09-28 17:17:15 KST",
+  "stamp": "20260928_1717",
+  "ok": true,
+  "edge_rule": "셋업 제외 추세지속",
+  "gate_rule": "브레드스 ≥ 50% · ATR ≤ 4% · 24h 변동 ≤ 15% · BTC 4H > EMA200",
+  "exchange": "Bybit USDT 무기한",
+  "scanned": 117,
+  "candidates": 4,
+  "errors": 0,
+  "market": {
+    "breadth": 54.700854700854705,
+    "n_uni": 117,
+    "n_above": 64,
+    "btc_close": 82993.2,
+    "btc_ema200": 79236.35533985174,
+    "btc_up": true,
+    "regime": "risk-on",
+    "gate": "통과",
+    "halved": 0,
+    "rejected": 50
+  },
+  "seconds": 10.1,
+  "new_candidates": [
+    "CC"
+  ],
+  "reentered": [
+    "BZ",
+    "MON"
+  ],
+  "alert_count": 1,
+  "alert_min_score": 70.0,
+  "alerts": [
+    {
+      "kind": "REENTER",
+      "base": "BZ",
+      "score": 76.0,
+      "setup": "눌림목",
+      "last": 99.39,
+      "stop": 97.64797768980635,
+      "tp1": 102.8740446203873,
+      "tp2": 104.96447139261967,
+      "risk_pct": 1.75,
+      "rsi_4h": 54.6,
+      "rsi_1h": 57.8,
+      "vol_ratio": 1.69,
+      "funding": -0.018763,
+      "atr_pct": 1.17,
+      "dist_high20": 2.82,
+      "turnover": 7828593.3243
+    }
+  ],
+  "interval_min": 30,
+  "report_html": "D:\\Claw\\workspace\\alt_long_scanner_kit\\reports\\scan_20260928_1717.html",
+  "report_csv": "D:\\Claw\\workspace\\alt_long_scanner_kit\\reports\\scan_20260928_1717.csv",
+  "latest_html": "D:\\Claw\\workspace\\alt_long_scanner_kit\\reports\\latest.html",
+  "latest_csv": "D:\\Claw\\workspace\\alt_long_scanner_kit\\reports\\latest.csv",
+  "history_csv": "D:\\Claw\\workspace\\alt_long_scanner_kit\\reports\\history.csv",
+  "alerts_csv": "D:\\Claw\\workspace\\alt_long_scanner_kit\\reports\\alerts.csv",
+  "top": [
+    {
+      "base": "BZ",
+      "score": 76.0,
+      "setup": "눌림목",
+      "last": 99.39,
+      "chg24": 0.0402,
+      "stop": 97.64797768980635,
+      "tp1": 102.8740446203873,
+      "risk_pct": 1.75,
+      "rsi_4h": 54.6,
+      "vol_ratio": 1.69
+    },
+    {
+      "base": "CL",
+      "score": 68.0,
+      "setup": "눌림목",
+      "last": 94.43,
+      "chg24": 0.31870000000000004,
+      "stop": 92.68480886442032,
+      "tp1": 97.92038227115938,
+      "risk_pct": 1.85,
+      "rsi_4h": 55.3,
+      "vol_ratio": 1.25
+    },
+    {
+      "base": "MON",
+      "score": 67.0,
+      "setup": "눌림목",
+      "last": 0.0284,
+      "chg24": 5.6154,
+      "stop": 0.02673522461342753,
+      "tp1": 0.031729550773144946,
+      "risk_pct": 5.86,
+      "rsi_4h": 62.5,
+      "vol_ratio": 1.18
+    },
+    {
+      "base": "CC",
+      "score": 67.0,
+      "setup": "눌림목",
+      "last": 0.13846,
+      "chg24": 1.8088,
+      "stop": 0.13072847097687407,
+      "tp1": 0.15392305804625186,
+      "risk_pct": 5.58,
+      "rsi_4h": 65.0,
+      "vol_ratio": 1.33
+    }
+  ]
+}
